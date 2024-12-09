@@ -54,8 +54,8 @@ const gameController = ((
   const board = gameBoard;
 
   const players = [
-    { name: playerOneName, marker: "X", score: 0 },
-    { name: playerTwoName, marker: "O", score: 0 },
+    { name: playerOneName, marker: "X" },
+    { name: playerTwoName, marker: "O" },
   ];
 
   let activePlayer = players[0];
@@ -139,28 +139,19 @@ const gameController = ((
 
     if (winningPattern()) {
       console.log(`${getActivePlayer().name} is the winner`);
-      getActivePlayer().score++;
-      console.log(
-        `(Player1) Score: ${players[0].score} (Player2) Score: ${players[1].score}`
-      );
 
-      if (players[0].score === 3) {
-        console.log(`${player[0].name} Won`);
-        players[0].score = 0;
-        players[1].score = 0;
-      } else if (players[1].score === 3) {
-        console.log(`${players[1].name} Won`);
-        players[0].score = 0;
-        players[1].score = 0;
-      }
       console.log("Clearing all cells");
       clearValues();
       console.log("Starting....");
+
+      // Always the player 1 will be the first
       activePlayer = players[1];
     } else if (drawPattern) {
       console.log("DRAW!");
       console.log("Clearing all cells");
       clearValues();
+
+      // Always the player 1 will be the first
       activePlayer = players[1];
     }
   };
