@@ -78,14 +78,6 @@ const gameController = ((
       }
     };
 
-    const sameX = (el) => {
-      if (el === "X") return true;
-    };
-
-    const sameO = (el) => {
-      if (el === "O") return true;
-    };
-
     const drawPattern =
       currentBoard[0]
         .map((cell) => cell.getValue())
@@ -110,6 +102,14 @@ const gameController = ((
         [2, 1, 0],
       ];
 
+      const sameX = (el) => {
+        if (el === "X") return true;
+      };
+
+      const sameO = (el) => {
+        if (el === "O") return true;
+      };
+
       combination.forEach((row) => {
         if (
           currentBoard[0].map((cell) => cell.getValue()).every(sameX) ||
@@ -125,9 +125,9 @@ const gameController = ((
             currentBoard[1][row[1]].getValue(),
             currentBoard[2][row[2]].getValue(),
           ].every(sameO) ||
-          currentBoard[0].map((cell) => cell.getValue()).every(sameX) ||
-          currentBoard[1].map((cell) => cell.getValue()).every(sameX) ||
-          currentBoard[2].map((cell) => cell.getValue()).every(sameX)
+          currentBoard[0].map((cell) => cell.getValue()).every(sameO) ||
+          currentBoard[1].map((cell) => cell.getValue()).every(sameO) ||
+          currentBoard[2].map((cell) => cell.getValue()).every(sameO)
         ) {
           isWin = true;
           console.log("Win!");
