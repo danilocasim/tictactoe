@@ -1,30 +1,20 @@
 "use strict";
 
 const gameBoard = (() => {
-  const rows = 3;
-  const columns = 3;
+  const cells = 9;
   const board = [];
 
-  for (let i = 0; i < rows; i++) {
-    board[i] = [];
-    for (let j = 0; j < columns; j++) {
-      board[i].push(Cell());
-    }
+  for (let i = 0; i < cells; i++) {
+    board.push(Cell());
   }
 
   const getBoard = () => board;
 
-  const setMarker = (row, column, player) => {
-    board[row][column].addMarker(player.marker);
+  const setMarker = (index, player) => {
+    board[index].addMarker(player.marker);
   };
 
-  const printBoard = () => {
-    const boardWithValues = board.map((row) =>
-      row.map((cell) => cell.getValue())
-    );
-    console.log(boardWithValues);
-  };
-  return { board, getBoard, setMarker, printBoard };
+  return { getBoard, setMarker };
 })();
 
 function Cell() {
@@ -69,34 +59,21 @@ const gameController = ((
   const checkWinner = () => {
     const currentBoard = board.getBoard();
 
-    const clearValues = () => {
-      currentBoard.forEach((row) =>
-        row.forEach((cell) => cell.removeAllValues())
-      );
-    };
-
-    const drawPattern =
-      currentBoard[0]
-        .map((cell) => cell.getValue())
-        .every((el) => typeof el === "string") &&
-      currentBoard[1]
-        .map((cell) => cell.getValue())
-        .every((el) => typeof el === "string") &&
-      currentBoard[2]
-        .map((cell) => cell.getValue())
-        .every((el) => typeof el === "string");
+    const drawPattern = currentBoard
+      .map((cell) => cell.getValue())
+      .every((el) => typeof el === "string");
 
     const winningPattern = () => {
       let isWin;
       const combination = [
         [0, 1, 2],
-        [0, 1, 2],
-        [0, 1, 2],
-        [0, 0, 0],
-        [1, 1, 1],
-        [2, 2, 2],
-        [0, 1, 2],
-        [2, 1, 0],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
       ];
 
       const sameX = (el) => {
@@ -109,22 +86,16 @@ const gameController = ((
 
       combination.forEach((row) => {
         if (
-          currentBoard[0].map((cell) => cell.getValue()).every(sameX) ||
-          currentBoard[1].map((cell) => cell.getValue()).every(sameX) ||
-          currentBoard[2].map((cell) => cell.getValue()).every(sameX) ||
           [
-            currentBoard[0][row[0]].getValue(),
-            currentBoard[1][row[1]].getValue(),
-            currentBoard[2][row[2]].getValue(),
+            currentBoard[row[0]].getValue(),
+            currentBoard[row[1]].getValue(),
+            currentBoard[row[2]].getValue(),
           ].every(sameX) ||
           [
-            currentBoard[0][row[0]].getValue(),
-            currentBoard[1][row[1]].getValue(),
-            currentBoard[2][row[2]].getValue(),
-          ].every(sameO) ||
-          currentBoard[0].map((cell) => cell.getValue()).every(sameO) ||
-          currentBoard[1].map((cell) => cell.getValue()).every(sameO) ||
-          currentBoard[2].map((cell) => cell.getValue()).every(sameO)
+            currentBoard[row[0]].getValue(),
+            currentBoard[row[1]].getValue(),
+            currentBoard[row[2]].getValue(),
+          ].every(sameO)
         ) {
           isWin = true;
           console.log("Win!");
@@ -134,27 +105,11 @@ const gameController = ((
       return isWin;
     };
 
-    if (winningPattern()) {
-      console.log(`${getActivePlayer().name} is the winner`);
-
-      console.log("Clearing all cells");
-      clearValues();
-      console.log("Starting....");
-
-      // Always the player 1 will be the first
-      activePlayer = players[1];
-    } else if (drawPattern) {
-      console.log("DRAW!");
-      console.log("Clearing all cells");
-      clearValues();
-
-      // Always the player 1 will be the first
-      activePlayer = players[1];
-    }
+    return { winningPattern, drawPattern };
   };
 
   const render = () => {
-    const board = gameBoard.getBoard().flat();
+    const board = gameBoard.getBoard();
     const buttons = document.querySelectorAll(".board button");
 
     buttons.forEach((button, index) => {
@@ -168,26 +123,45 @@ const gameController = ((
     });
   };
 
-  const printCurrentBoard = () => {
-    board.printBoard();
-    render();
+  const printPlayersTurn = () => {
     console.log(`${getActivePlayer().name}'s turn`);
   };
 
-  const playRound = (row, column) => {
+  const playRound = () => {
     const currentBoard = board.getBoard();
+    const buttons = document.querySelectorAll(".board button");
 
-    if (!currentBoard[row][column].getValue()) {
-      board.setMarker(row, column, getActivePlayer());
-      checkWinner();
-      switchPlayerTurn();
-      printCurrentBoard();
-    }
+    buttons.forEach((button, index) => {
+      button.addEventListener("click", (e) => {
+        if (!currentBoard[index].getValue()) {
+          board.setMarker(index, getActivePlayer());
+          render();
+          switchPlayerTurn();
+          printPlayersTurn();
+        }
+        if (checkWinner().winningPattern()) {
+          switchPlayerTurn();
+          console.log(`${getActivePlayer().name} is the winner`);
+          buttons.forEach((button) => (button.disabled = true));
+        } else if (checkWinner().drawPattern) {
+          console.log("DRAW!");
+          buttons.forEach((button) => (button.disabled = true));
+        }
+      });
+    });
+    const reset = document.querySelector("#reset");
+    reset.addEventListener("click", () => {
+      currentBoard.forEach((cell) => cell.removeAllValues());
+      render();
+      activePlayer = players[0];
+      buttons.forEach((button) => (button.disabled = false));
+    });
+    printPlayersTurn();
   };
-
-  printCurrentBoard();
 
   return { getActivePlayer, playRound };
 })();
 
 const game = gameController;
+
+game.playRound();

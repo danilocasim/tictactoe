@@ -102,7 +102,7 @@ main {
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 5rem);
-  background-color: #34312d;
+  background-color: #d9c5b2;
 }
 
 .board {
@@ -116,8 +116,8 @@ main {
 .board button {
   font-size: 3rem;
   height: calc(40vh / 3);
-  border: 1px solid #f3f3f4;
-  background-color: #14110f;
-  color: #f3f3f4;
+  border: 1px solid #14110f;
+  background-color: #f3f3f4;
+  color: #14110f;
   cursor: pointer;
 }
