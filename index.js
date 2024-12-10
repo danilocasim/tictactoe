@@ -153,8 +153,24 @@ const gameController = ((
     }
   };
 
+  const render = () => {
+    const board = gameBoard.getBoard().flat();
+    const buttons = document.querySelectorAll(".board button");
+
+    buttons.forEach((button, index) => {
+      let marker = board[index].getValue();
+
+      if (marker !== undefined) {
+        button.textContent = `${marker}`;
+      } else {
+        button.textContent = "";
+      }
+    });
+  };
+
   const printCurrentBoard = () => {
     board.printBoard();
+    render();
     console.log(`${getActivePlayer().name}'s turn`);
   };
 

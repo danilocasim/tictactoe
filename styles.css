@@ -1,7 +1,10 @@
-/*
-  Josh's Custom CSS Reset
-  https://www.joshwcomeau.com/css/custom-css-reset/
-*/
+@font-face {
+  font-family: "Exo";
+  src: url("fonts/exo-regular-webfont.woff2") format("woff2"),
+    url("fonts/exo-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
 *,
 *::before,
@@ -63,3 +66,58 @@ h6 {
 }
 
 /* END OF CSS RESET */
+
+body {
+  font-family: "Exo", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.container {
+  min-height: 100vh;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #14110f;
+  color: #f3f3f4;
+  height: 5rem;
+  font-size: 2rem;
+}
+
+.reset svg {
+  height: 2rem;
+  fill: #f3f3f4;
+  transition: 0.8s;
+  cursor: pointer;
+}
+
+.reset svg:active {
+  rotate: 180deg;
+  transition: 0.2s;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 5rem);
+  background-color: #34312d;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: #f3f3f4;
+  height: 40vh;
+  width: 40vh;
+}
+
+.board button {
+  font-size: 3rem;
+  height: calc(40vh / 3);
+  border: 1px solid #f3f3f4;
+  background-color: #14110f;
+  color: #f3f3f4;
+  cursor: pointer;
+}
