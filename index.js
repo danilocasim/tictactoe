@@ -35,7 +35,7 @@ function Cell() {
   };
 
   const removeAllValues = () => {
-    value = "";
+    value = undefined;
   };
 
   const getValue = () => value;
@@ -70,12 +70,9 @@ const gameController = ((
     const currentBoard = board.getBoard();
 
     const clearValues = () => {
-      for (let i = 0; i < 3; i++) {
-        board.board[i] = [];
-        for (let j = 0; j < 3; j++) {
-          board.board[i].push(Cell());
-        }
-      }
+      currentBoard.forEach((row) =>
+        row.forEach((cell) => cell.removeAllValues())
+      );
     };
 
     const drawPattern =
