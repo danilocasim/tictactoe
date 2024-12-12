@@ -111,6 +111,7 @@ const gameController = ((
   const render = () => {
     const board = gameBoard.getBoard();
     const buttons = document.querySelectorAll(".board button");
+    const playerTurn = document.querySelector(".player-turn");
     const playerOneScore = document.querySelector(".player1");
     const playerTwoScore = document.querySelector(".player2");
 
@@ -126,54 +127,64 @@ const gameController = ((
 
     playerOneScore.textContent = `Player 1: ${players[0].score}`;
     playerTwoScore.textContent = `Player 2: ${players[1].score}`;
+
+    playerTurn.textContent = `${getActivePlayer().name}'s turn`;
   };
 
   const printPlayersTurn = () => {
     console.log(`${getActivePlayer().name}'s turn`);
   };
 
-  const playRound = () => {
-    const currentBoard = board.getBoard();
-    const buttons = document.querySelectorAll(".board button");
-    const result = document.querySelector(".round-result");
-
-    buttons.forEach((button, index) => {
-      button.addEventListener("click", (e) => {
-        if (!currentBoard[index].getValue()) {
-          board.setMarker(index, getActivePlayer());
-          render();
-          switchPlayerTurn();
-          printPlayersTurn();
-        }
-        if (checkWinner().winningPattern()) {
-          switchPlayerTurn();
-
-          result.textContent = `${getActivePlayer().name} is the winner`;
-          getActivePlayer().score++;
-
-          render();
-
-          buttons.forEach((button) => (button.disabled = true));
-        } else if (checkWinner().drawPattern) {
-          result.textContent = `Draw!`;
-          buttons.forEach((button) => (button.disabled = true));
-        }
-      });
-    });
-    const reset = document.querySelector("#reset");
-    reset.addEventListener("click", () => {
-      currentBoard.forEach((cell) => cell.removeAllValues());
-      render();
-      result.textContent = "";
-      activePlayer = players[0];
-      buttons.forEach((button) => (button.disabled = false));
-    });
-    printPlayersTurn();
+  const switchPlayerOneTurn = () => {
+    activePlayer = players[0];
   };
 
-  return { getActivePlayer, playRound };
+  return {
+    getActivePlayer,
+    checkWinner,
+    switchPlayerTurn,
+    render,
+    printPlayersTurn,
+    switchPlayerOneTurn,
+  };
 })();
 
-const game = gameController;
+const screenController = (() => {
+  const game = gameController;
+  const board = gameBoard;
+  const currentBoard = gameBoard.getBoard();
+  const buttons = document.querySelectorAll(".board button");
+  const result = document.querySelector(".round-result");
 
-game.playRound();
+  buttons.forEach((button, index) => {
+    button.addEventListener("click", (e) => {
+      if (!currentBoard[index].getValue()) {
+        board.setMarker(index, game.getActivePlayer());
+        game.switchPlayerTurn();
+        game.render();
+      }
+      if (game.checkWinner().winningPattern()) {
+        game.switchPlayerTurn();
+
+        result.textContent = `${game.getActivePlayer().name} is the winner`;
+        game.getActivePlayer().score++;
+
+        game.render();
+
+        buttons.forEach((button) => (button.disabled = true));
+      } else if (game.checkWinner().drawPattern) {
+        result.textContent = `Draw!`;
+        buttons.forEach((button) => (button.disabled = true));
+      }
+    });
+  });
+
+  const reset = document.querySelector("#reset");
+  reset.addEventListener("click", () => {
+    currentBoard.forEach((cell) => cell.removeAllValues());
+    game.switchPlayerOneTurn();
+    game.render();
+    result.textContent = "";
+    buttons.forEach((button) => (button.disabled = false));
+  });
+})();
