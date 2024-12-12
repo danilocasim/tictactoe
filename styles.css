@@ -161,7 +161,7 @@ dialog {
   border-radius: 10px;
   outline: none;
   width: 40vh;
-  height: 30vh;
+  height: 35vh;
   position: relative;
   top: 50%;
   left: 50%;
@@ -176,6 +176,7 @@ dialog #closeDialog {
   border: none;
   font-weight: bold;
   cursor: pointer;
+  color: #14110f;
 }
 
 dialog > form {
@@ -208,6 +209,12 @@ form button {
   padding: 5px 10px;
   border-radius: 5px;
   border: none;
+  cursor: pointer;
+}
+
+form button:active {
+  background-color: #d9c5b2;
+  color: #14110f;
 }
 
 .blur {
