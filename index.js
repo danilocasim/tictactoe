@@ -44,8 +44,8 @@ const gameController = ((
   const board = gameBoard;
 
   const players = [
-    { name: playerOneName, marker: "X" },
-    { name: playerTwoName, marker: "O" },
+    { name: playerOneName, marker: "X", score: 0 },
+    { name: playerTwoName, marker: "O", score: 0 },
   ];
 
   let activePlayer = players[0];
@@ -111,6 +111,8 @@ const gameController = ((
   const render = () => {
     const board = gameBoard.getBoard();
     const buttons = document.querySelectorAll(".board button");
+    const playerOneScore = document.querySelector(".player1");
+    const playerTwoScore = document.querySelector(".player2");
 
     buttons.forEach((button, index) => {
       let marker = board[index].getValue();
@@ -121,6 +123,9 @@ const gameController = ((
         button.textContent = "";
       }
     });
+
+    playerOneScore.textContent = `Player 1: ${players[0].score}`;
+    playerTwoScore.textContent = `Player 2: ${players[1].score}`;
   };
 
   const printPlayersTurn = () => {
@@ -130,6 +135,7 @@ const gameController = ((
   const playRound = () => {
     const currentBoard = board.getBoard();
     const buttons = document.querySelectorAll(".board button");
+    const result = document.querySelector(".round-result");
 
     buttons.forEach((button, index) => {
       button.addEventListener("click", (e) => {
@@ -141,10 +147,15 @@ const gameController = ((
         }
         if (checkWinner().winningPattern()) {
           switchPlayerTurn();
-          console.log(`${getActivePlayer().name} is the winner`);
+
+          result.textContent = `${getActivePlayer().name} is the winner`;
+          getActivePlayer().score++;
+
+          render();
+
           buttons.forEach((button) => (button.disabled = true));
         } else if (checkWinner().drawPattern) {
-          console.log("DRAW!");
+          result.textContent = `Draw!`;
           buttons.forEach((button) => (button.disabled = true));
         }
       });
@@ -153,6 +164,7 @@ const gameController = ((
     reset.addEventListener("click", () => {
       currentBoard.forEach((cell) => cell.removeAllValues());
       render();
+      result.textContent = "";
       activePlayer = players[0];
       buttons.forEach((button) => (button.disabled = false));
     });
