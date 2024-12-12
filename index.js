@@ -37,7 +37,7 @@ function Cell() {
   };
 }
 
-const gameController = (
+const gameController = ((
   playerOneName = "Player 1",
   playerTwoName = "Player 2"
 ) => {
@@ -108,6 +108,94 @@ const gameController = (
     return { winningPattern, drawPattern };
   };
 
+  const printPlayersTurn = () => {
+    return `${getActivePlayer().name}'s turn`;
+  };
+
+  const switchPlayerOneTurn = () => {
+    activePlayer = players[0];
+  };
+
+  const setName = (player1 = "Player 1", player2 = "Player 2") => {
+    players[0].name = player1;
+    players[1].name = player2;
+  };
+
+  const resetScore = () => {
+    players[0].score = 0;
+    players[1].score = 0;
+  };
+
+  const getPlayers = () => players;
+
+  return {
+    getActivePlayer,
+    checkWinner,
+    switchPlayerTurn,
+    printPlayersTurn,
+    switchPlayerOneTurn,
+    resetScore,
+    getPlayers,
+    setName,
+  };
+})();
+
+const playersName = (() => {
+  const dialogContainer = document.querySelector(".dialog-container");
+  const dialog = document.querySelector("dialog");
+  const form = document.querySelector("dialog form");
+  const currentBoard = gameBoard.getBoard();
+  const buttons = document.querySelectorAll(".board button");
+
+  dialogContainer.addEventListener("click", (e) => {
+    const target = e.target.id;
+    switch (target) {
+      case "openDialog":
+        dialog.showModal();
+        document.querySelector("body").className = "blur";
+        break;
+      case "closeDialog":
+        dialog.close();
+        document.querySelector("body").classList.remove("blur");
+        break;
+    }
+  });
+
+  dialog.addEventListener("close", () => {
+    dialog.close();
+    document.querySelector("body").classList.remove("blur");
+  });
+
+  let playerOneName;
+  let playerTwoName;
+
+  form.addEventListener("submit", () => {
+    playerOneName = document.querySelector("#playerOneName").value;
+    playerTwoName = document.querySelector("#playerTwoName").value;
+    currentBoard.forEach((cell) => cell.removeAllValues());
+    gameController.resetScore();
+    let clickEvent = new Event("click");
+    document.querySelector("#reset").dispatchEvent(clickEvent);
+    buttons.forEach((button) => (button.disabled = false));
+    form.reset();
+  });
+
+  const getPlayerOneName = () => playerOneName;
+  const getPlayerTwoName = () => playerTwoName;
+
+  return {
+    getPlayerOneName,
+    getPlayerTwoName,
+  };
+})();
+
+const screenController = (() => {
+  const name = playersName;
+  const game = gameController;
+  const board = gameBoard;
+  const currentBoard = gameBoard.getBoard();
+  const buttons = document.querySelectorAll(".board button");
+
   const render = () => {
     const board = gameBoard.getBoard();
     const buttons = document.querySelectorAll(".board button");
@@ -127,60 +215,31 @@ const gameController = (
       }
     });
 
-    playerOneName.textContent = `${players[0].name}`;
-    playerTwoName.textContent = `${players[1].name}`;
-    playerOneScore.textContent = `${players[0].score}`;
-    playerTwoScore.textContent = `${players[1].score}`;
+    game.setName(name.getPlayerOneName(), name.getPlayerTwoName());
 
-    playerTurn.textContent = `${getActivePlayer().name}'s turn`;
+    playerOneName.textContent = `${game.getPlayers()[0].name}`;
+    playerTwoName.textContent = `${game.getPlayers()[1].name}`;
+    playerOneScore.textContent = `${game.getPlayers()[0].score}`;
+    playerTwoScore.textContent = `${game.getPlayers()[1].score}`;
+
+    playerTurn.textContent = `${game.printPlayersTurn()}`;
   };
-
-  const printPlayersTurn = () => {
-    console.log(`${getActivePlayer().name}'s turn`);
-  };
-
-  const switchPlayerOneTurn = () => {
-    activePlayer = players[0];
-  };
-
-  return {
-    getActivePlayer,
-    checkWinner,
-    switchPlayerTurn,
-    render,
-    printPlayersTurn,
-    switchPlayerOneTurn,
-  };
-};
-
-const screenController = () => {
-  const game = gameController(
-    playersName.getPlayerOneName(),
-    playersName.getPlayerTwoName()
-  );
-  const board = gameBoard;
-  const currentBoard = gameBoard.getBoard();
-  const buttons = document.querySelectorAll(".board button");
-  const result = document.querySelector(".round-result");
 
   buttons.forEach((button, index) => {
     button.addEventListener("click", (e) => {
       if (!currentBoard[index].getValue()) {
         board.setMarker(index, game.getActivePlayer());
         game.switchPlayerTurn();
-        game.render();
+        render();
       }
       if (game.checkWinner().winningPattern()) {
         game.switchPlayerTurn();
 
-        // result.textContent = `${game.getActivePlayer().name} is the winner`;
         game.getActivePlayer().score++;
-
-        game.render();
+        render();
 
         buttons.forEach((button) => (button.disabled = true));
       } else if (game.checkWinner().drawPattern) {
-        // result.textContent = `Draw!`;
         buttons.forEach((button) => (button.disabled = true));
       }
     });
@@ -190,55 +249,8 @@ const screenController = () => {
   reset.addEventListener("click", () => {
     currentBoard.forEach((cell) => cell.removeAllValues());
     game.switchPlayerOneTurn();
-    game.render();
-    console.log(playersName.getPlayerOneName());
-    // result.textContent = "";
+    render();
     buttons.forEach((button) => (button.disabled = false));
   });
-  game.render();
-};
-const playersName = (() => {
-  const dialogContainer = document.querySelector(".dialog-container");
-  const dialog = document.querySelector("dialog");
-  const form = document.querySelector("dialog form");
-  const currentBoard = gameBoard.getBoard();
-  const buttons = document.querySelectorAll(".board button");
-
-  dialogContainer.addEventListener("click", (e) => {
-    const target = e.target.id;
-    switch (target) {
-      case "openDialog":
-        dialog.showModal();
-        break;
-      case "closeDialog":
-        dialog.close();
-        break;
-    }
-  });
-
-  dialog.addEventListener("close", () => {
-    screenController();
-  });
-
-  let playerOneName;
-  let playerTwoName;
-
-  form.addEventListener("submit", () => {
-    playerOneName = document.querySelector("#playerOneName").value;
-    playerTwoName = document.querySelector("#playerTwoName").value;
-    currentBoard.forEach((cell) => cell.removeAllValues());
-    buttons.forEach((button) => (button.disabled = false));
-
-    form.reset();
-    screenController();
-  });
-
-  const getPlayerOneName = () => playerOneName;
-  const getPlayerTwoName = () => playerTwoName;
-
-  dialog.showModal();
-  return {
-    getPlayerOneName,
-    getPlayerTwoName,
-  };
+  render();
 })();

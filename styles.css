@@ -188,3 +188,7 @@ form input {
   appearance: none;
   border: 1px solid #14110f;
 }
+
+.blur {
+  filter: blur(5px);
+}
