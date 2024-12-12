@@ -37,6 +37,10 @@ select {
   font: inherit;
 }
 
+label {
+  display: block;
+}
+
 p,
 h1,
 h2,
@@ -113,13 +117,13 @@ main {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
-  height: 40vh;
-  width: 40vh;
+  height: 30vh;
+  width: 30vh;
 }
 
 .board button {
   font-size: 3rem;
-  height: calc(40vh / 3);
+  height: calc(30vh / 3);
   background-color: #14110f;
   border: none;
   color: #f3f3f4;
@@ -149,4 +153,38 @@ main {
 .score {
   font-weight: 700;
   font-size: 1.5rem;
+}
+
+dialog {
+  width: 40vh;
+  height: 25vh;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+dialog #closeDialog {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+dialog > form {
+  display: grid;
+  place-content: space-between center;
+  height: 100%;
+}
+
+form label {
+  font-weight: 700;
+}
+
+form input {
+  appearance: none;
+  border: 1px solid #14110f;
 }

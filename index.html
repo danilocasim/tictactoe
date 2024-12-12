@@ -1,51 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="styles.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <header>
-            <nav>
-                <div class="logo">TicTac2</div>
-                <div class="reset">
-                    <svg id="reset" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <header>
+        <nav>
+          <div class="logo">TicTac2</div>
+          <div class="reset">
+            <svg
+              id="reset"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
               <title>restart</title>
               <path
                 d="M2 12C2 16.97 6.03 21 11 21C13.39 21 15.68 20.06 17.4 18.4L15.9 16.9C14.63 18.25 12.86 19 11 19C4.76 19 1.64 11.46 6.05 7.05C10.46 2.64 18 5.77 18 12H15L19 16H19.1L23 12H20C20 7.03 15.97 3 11 3C6.03 3 2 7.03 2 12Z"
               />
             </svg>
-                </div>
-            </nav>
-        </header>
-        <main>
-            <div class="result-container">
-                <div class="player-turn"></div>
-                <!-- <div class="round-result"></div> -->
-            </div>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <div class="result-container">
+          <div class="player-turn"></div>
+          <!-- <div class="round-result"></div> -->
+        </div>
 
-            <div class="board">
-                <button title="cell"></button><button title="cell"></button><button title="cell"></button><button title="cell"></button><button title="cell"></button><button title="cell"></button><button title="cell"></button><button title="cell"></button>
-                <button title="cell"></button>
-            </div>
-            <div class="round-score">
-                <div class="player1">
-                    <div class="name">Player X</div>
-                    <div class="score">0</div>
-                </div>
-                <div class="player2">
-                    <div class="name">Player O</div>
-                    <div class="score">0</div>
-                </div>
-            </div>
+        <div class="board">
+          <button title="cell"></button><button title="cell"></button
+          ><button title="cell"></button><button title="cell"></button
+          ><button title="cell"></button><button title="cell"></button
+          ><button title="cell"></button><button title="cell"></button>
+          <button title="cell"></button>
+        </div>
+        <div class="round-score">
+          <div class="player1">
+            <div class="name"></div>
+            <div class="score">0</div>
+          </div>
+          <div class="player2">
+            <div class="name"></div>
+            <div class="score">0</div>
+          </div>
+        </div>
+        <div class="dialog-container">
+          <button id="openDialog">Edit Players Name</button>
+          <dialog>
+            <button id="closeDialog" type="button">X</button>
+            <form method="dialog">
+              <div>
+                <label for="playerOne">Player 1 </label>
+                <input
+                  type="text"
+                  id="playerOneName"
+                  name="playerOneName"
+                  placeholder="Name"
+                  required
+                />
+              </div>
+              <div>
+                <label for="playerTwo">Player 2</label>
+                <input
+                  type="text"
+                  name="playerTwoName"
+                  id="playerTwoName"
+                  placeholder="Name"
+                  required
+                />
+              </div>
+              <button type="submit">Submit</button>
+            </form>
+          </dialog>
+        </div>
+      </main>
     </div>
-    </main>
     <script src="index.js"></script>
-</body>
-
+  </body>
 </html>
