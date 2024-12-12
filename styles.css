@@ -156,8 +156,12 @@ main {
 }
 
 dialog {
+  background-color: #d9c5b2;
+  border: 2px solid #14110f;
+  border-radius: 10px;
+  outline: none;
   width: 40vh;
-  height: 25vh;
+  height: 30vh;
   position: relative;
   top: 50%;
   left: 50%;
@@ -176,17 +180,34 @@ dialog #closeDialog {
 
 dialog > form {
   display: grid;
-  place-content: space-between center;
+  place-content: space-around center;
   height: 100%;
 }
 
 form label {
   font-weight: 700;
+  color: #14110f;
 }
 
 form input {
   appearance: none;
   border: 1px solid #14110f;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: #f3f3f4;
+}
+
+form input:focus {
+  outline: none;
+  border: 2px solid #14110f;
+}
+
+form button {
+  background-color: #14110f;
+  color: #f3f3f4;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
 }
 
 .blur {
