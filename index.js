@@ -112,8 +112,8 @@ const gameController = ((
     const board = gameBoard.getBoard();
     const buttons = document.querySelectorAll(".board button");
     const playerTurn = document.querySelector(".player-turn");
-    const playerOneScore = document.querySelector(".player1");
-    const playerTwoScore = document.querySelector(".player2");
+    const playerOneScore = document.querySelector(".player1 > .score");
+    const playerTwoScore = document.querySelector(".player2 > .score");
 
     buttons.forEach((button, index) => {
       let marker = board[index].getValue();
@@ -125,8 +125,8 @@ const gameController = ((
       }
     });
 
-    playerOneScore.textContent = `Player 1: ${players[0].score}`;
-    playerTwoScore.textContent = `Player 2: ${players[1].score}`;
+    playerOneScore.textContent = `${players[0].score}`;
+    playerTwoScore.textContent = `${players[1].score}`;
 
     playerTurn.textContent = `${getActivePlayer().name}'s turn`;
   };
@@ -166,14 +166,14 @@ const screenController = (() => {
       if (game.checkWinner().winningPattern()) {
         game.switchPlayerTurn();
 
-        result.textContent = `${game.getActivePlayer().name} is the winner`;
+        // result.textContent = `${game.getActivePlayer().name} is the winner`;
         game.getActivePlayer().score++;
 
         game.render();
 
         buttons.forEach((button) => (button.disabled = true));
       } else if (game.checkWinner().drawPattern) {
-        result.textContent = `Draw!`;
+        // result.textContent = `Draw!`;
         buttons.forEach((button) => (button.disabled = true));
       }
     });
@@ -184,7 +184,7 @@ const screenController = (() => {
     currentBoard.forEach((cell) => cell.removeAllValues());
     game.switchPlayerOneTurn();
     game.render();
-    result.textContent = "";
+    // result.textContent = "";
     buttons.forEach((button) => (button.disabled = false));
   });
 })();
