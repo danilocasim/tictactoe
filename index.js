@@ -187,4 +187,5 @@ const screenController = (() => {
     // result.textContent = "";
     buttons.forEach((button) => (button.disabled = false));
   });
+  game.render();
 })();
