@@ -121,6 +121,7 @@ main {
   font-size: 3rem;
   height: calc(40vh / 3);
   background-color: #14110f;
+  border: none;
   color: #f3f3f4;
   cursor: pointer;
 }
