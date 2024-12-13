@@ -84,15 +84,20 @@ nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #14110f;
-  color: #f3f3f4;
+  background-color: #131010;
+  color: #fff0dc;
   height: 5rem;
   font-size: 2rem;
 }
 
+.reset {
+  display: flex;
+  gap: 1rem;
+}
+
 .reset svg {
   height: 2rem;
-  fill: #f3f3f4;
+  fill: #fff0dc;
   transition: 0.8s;
   cursor: pointer;
 }
@@ -110,7 +115,7 @@ main {
   align-items: center;
   flex-direction: column;
   min-height: calc(100vh - 5rem);
-  background-color: #d9c5b2;
+  background-color: #fff0dc;
 }
 
 .board {
@@ -124,9 +129,9 @@ main {
 .board button {
   font-size: 3rem;
   height: calc(30vh / 3);
-  background-color: #14110f;
+  background-color: #f0bb78;
   border: none;
-  color: #f3f3f4;
+  color: #131010;
   cursor: pointer;
 }
 
@@ -144,7 +149,7 @@ main {
   display: grid;
   place-content: center;
   text-align: center;
-  background-color: #14110f;
+  background-color: #543a14;
   border-radius: 20px;
   height: 4.5rem;
   color: #f3f3f4;
@@ -157,7 +162,7 @@ main {
 
 dialog {
   background-color: #d9c5b2;
-  border: 2px solid #14110f;
+  border: 2px solid #131010;
   border-radius: 10px;
   outline: none;
   width: 40vh;

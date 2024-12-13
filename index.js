@@ -141,13 +141,13 @@ const gameController = ((
 })();
 
 const playersName = (() => {
-  const dialogContainer = document.querySelector(".dialog-container");
+  const body = document.querySelector("body");
   const dialog = document.querySelector("dialog");
   const form = document.querySelector("dialog form");
   const currentBoard = gameBoard.getBoard();
   const buttons = document.querySelectorAll(".board button");
 
-  dialogContainer.addEventListener("click", (e) => {
+  body.addEventListener("click", (e) => {
     const target = e.target.id;
     switch (target) {
       case "openDialog":
