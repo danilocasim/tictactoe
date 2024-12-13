@@ -10,6 +10,7 @@
   --main-height: calc(100vh - var(--nav-height));
   --board-height: 30vh;
   --board-width: 30vh;
+  --board-cell-height: calc(var(--board-height) / 3);
   --board-cell-bg: var(--khaki);
   --board-cell-clr: var(--black);
   --result-round-bg: var(--brown);
@@ -158,7 +159,7 @@ main {
 
 .board button {
   font-size: 3rem;
-  height: calc(--board-height / 3);
+  height: var(--board-cell-height);
   background-color: var(--board-cell-bg);
   border: none;
   color: var(--board-cell-clr);
