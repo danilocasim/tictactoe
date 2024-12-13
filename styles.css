@@ -1,3 +1,33 @@
+:root {
+  --black: #131010;
+  --brown: #543a14;
+  --khaki: #f0bb78;
+  --cream: #fff0dc;
+  --nav-bg: var(--black);
+  --nav-clr: var(--cream);
+  --nav-height: 5rem;
+  --main-bg: var(--cream);
+  --main-height: calc(100vh - var(--nav-height));
+  --board-height: 30vh;
+  --board-width: 30vh;
+  --board-cell-bg: var(--khaki);
+  --board-cell-clr: var(--black);
+  --result-round-bg: var(--brown);
+  --result-round-clr: var(--cream);
+  --dialog-bg: var(--khaki);
+  --dialog-border-clr: var(--black);
+  --dialog-height: 35vh;
+  --dialog-width: 40vh;
+  --close-dialog-clr: var(--black);
+  --form-label-clr: var(--black);
+  --form-input-border-clr: var(--black);
+  --form-input-bg: var(--cream);
+  --form-submit-btn-bg: var(--black);
+  --form-submit-btn-clr: var(--cream);
+  --form-submit-btn-active-bg: var(--khaki);
+  --form-submit-btn-active-clr: var(--black);
+}
+
 @font-face {
   font-family: "Exo";
   src: url("fonts/exo-regular-webfont.woff2") format("woff2"),
@@ -84,9 +114,9 @@ nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #131010;
-  color: #fff0dc;
-  height: 5rem;
+  background-color: var(--nav-bg);
+  color: var(--nav-clr);
+  height: var(--nav-height);
   font-size: 2rem;
 }
 
@@ -97,7 +127,7 @@ nav {
 
 .reset svg {
   height: 2rem;
-  fill: #fff0dc;
+  fill: var(--nav-clr);
   transition: 0.8s;
   cursor: pointer;
 }
@@ -114,24 +144,24 @@ main {
   padding: 2rem;
   align-items: center;
   flex-direction: column;
-  min-height: calc(100vh - 5rem);
-  background-color: #fff0dc;
+  min-height: var(--main-height);
+  background-color: var(--main-bg);
 }
 
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
-  height: 30vh;
-  width: 30vh;
+  height: var(--board-height);
+  width: var(--board-width);
 }
 
 .board button {
   font-size: 3rem;
-  height: calc(30vh / 3);
-  background-color: #f0bb78;
+  height: calc(--board-height / 3);
+  background-color: var(--board-cell-bg);
   border: none;
-  color: #131010;
+  color: var(--board-cell-clr);
   cursor: pointer;
 }
 
@@ -149,10 +179,10 @@ main {
   display: grid;
   place-content: center;
   text-align: center;
-  background-color: #543a14;
+  background-color: var(--result-round-bg);
   border-radius: 20px;
   height: 4.5rem;
-  color: #f3f3f4;
+  color: var(--result-round-clr);
 }
 
 .score {
@@ -161,8 +191,8 @@ main {
 }
 
 dialog {
-  background-color: #d9c5b2;
-  border: 2px solid #131010;
+  background-color: var(--dialog-bg);
+  border: 2px solid var(--dialog-border-clr);
   border-radius: 10px;
   outline: none;
   width: 40vh;
@@ -181,7 +211,7 @@ dialog #closeDialog {
   border: none;
   font-weight: bold;
   cursor: pointer;
-  color: #14110f;
+  color: var(--close-dialog-clr);
 }
 
 dialog > form {
@@ -192,25 +222,25 @@ dialog > form {
 
 form label {
   font-weight: 700;
-  color: #14110f;
+  color: var(--form-label-clr);
 }
 
 form input {
   appearance: none;
-  border: 1px solid #14110f;
+  border: 1px solid var(--form-input-border-clr);
   border-radius: 5px;
   padding: 5px 10px;
-  background-color: #f3f3f4;
+  background-color: var(--form-input-bg);
 }
 
 form input:focus {
   outline: none;
-  border: 2px solid #14110f;
+  border: 1px solid var(--form-input-border-clr);
 }
 
 form button {
-  background-color: #14110f;
-  color: #f3f3f4;
+  background-color: var(--form-submit-btn-bg);
+  color: var(--form-submit-btn-clr);
   padding: 5px 10px;
   border-radius: 5px;
   border: none;
@@ -218,8 +248,8 @@ form button {
 }
 
 form button:active {
-  background-color: #d9c5b2;
-  color: #14110f;
+  background-color: var(--form-submit-btn-active-bg);
+  color: var(--form-submit-btn-active-clr);
 }
 
 .blur {
